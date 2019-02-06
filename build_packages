@@ -84,7 +84,7 @@ if [[ "${FLAGS_usepkgonly}" -eq "${FLAGS_TRUE}" ]]; then
   FLAGS_workon="${FLAGS_FALSE}"
 fi
 
-check_gsutil_opts
+check_upload_opts
 
 # Before we can run any tools, we need to update chroot or setup_board.
 UPDATE_ARGS=( --regen_configs )
