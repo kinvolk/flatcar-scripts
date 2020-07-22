@@ -640,7 +640,15 @@ EOF
     fi
 
     sudo chroot "${root_fs_dir}" bash -c "cd /usr/share/selinux/mcs && semodule -s mcs -i *.pp"
-    sudo chroot "${root_fs_dir}" bash -c "find / -maxdepth 1 | egrep -v 'boot|proc|sys' | xargs restorecon -R || true"
+    # for now, only restore context of a module inserting
+    # functionality, and let's see how that fares
+    #
+    # sudo chroot "${root_fs_dir}" bash -c "find / -maxdepth 1 | egrep -v 'boot|proc|sys' | xargs restorecon -R || true"
+
+    local entries_to_relabel=('/' '/usr' '/usr/bin' '/usr/bin/kmod' '/lib')
+    local rec_entries_to_relabel=('/lib/modules')
+    sudo chroot "${root_fs_dir}" bash -c "restorecon $(printf "'%s' " ${entries_to_relabel[@]})" || true
+    sudo chroot "${root_fs_dir}" bash -c "restorecon -R $(printf "'%s' " ${rec_entries_to_relabel[@]})" || true
 
     if [[ ${did_mount_sys_fs_selinux} -eq 1 ]]; then
       sudo umount "${root_fs_dir}/sys/fs/selinux"
