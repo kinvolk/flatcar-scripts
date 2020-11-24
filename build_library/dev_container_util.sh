@@ -4,7 +4,7 @@
 
 get_binhost_url() {
 	if [ ${DEFAULT_GROUP} == "developer" ]; then
-		echo "https://storage.googleapis.com/flatcar-jenkins/${DEFAULT_GROUP}/boards/${BOARD}/${FLATCAR_VERSION_ID}/$1"
+		echo "https://storage.googleapis.com/flatcar-jenkins/${DEFAULT_GROUP}/boards/${BOARD}/${FLATCAR_VERSION}/$1"
 	else
 		echo "https://storage.googleapis.com/flatcar-jenkins/boards/${BOARD}/${FLATCAR_VERSION_ID}/$1"
 	fi
